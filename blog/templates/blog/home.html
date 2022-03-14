@@ -1,0 +1,208 @@
+{% extends "blog/base.html" %}
+{% block title %} Home-Page {% endblock title %}
+{% load static %}
+
+
+{% block body_content %}
+"background: linear-gradient(to right, rgba(254, 249, 215, 0.8), rgba(212, 252, 121, 0.4));"
+{% endblock body_content %}
+{% block content %}
+
+
+<br>
+<div class = "row">
+  <main class="col col-lg-{% if users %}11{% elif searched_posts %}10{% else %}12{% endif %}">
+  {% for post in posts %}
+  {% if forloop.counter0 == 0 %}
+    <div class="p-4 p-md-4 mb-4 text-white rounded  bg-dark " 
+    style = "background-size : 100% 100% ; color : black ;
+    background-image : url({% static 'blog/first background image.jpg' %} ">
+      <div class="row flex-nowrap justify-content-between align-items-center"
+      style = "color : black ;">
+        <div class="col-4 pt-1" style = "color : black ;">
+          <h4>
+            <a style = "text-decoration : none ; " href = "{% url 'profile-user' username=post.author.username %}">
+            <img src = "{{post.author.profile.image.url}}"
+            class = "rounded-circle article-img" 
+            style = "height:60px;width:60px;border-radius:50%;
+                    border: 4px solid white">
+            </a>
+            <a  href = "{% url 'profile-user' username=post.author.username %}"
+            style = "font-weight : 600 ; color : black ; text-decoration : none ;
+            font-family : incosolata; 
+            margin-left : 10px ;">{{post.author.username}}</a>
+
+            {% if request.user != post.author %}
+            
+              {% if request.user not in post.author.fame.followers.all %}
+
+                <a style = "text-decoration : none ; " href ="{% url 'follow-user' userid=post.author.id %}" style = "margin-left:20px;">Follow</a>
+              {% endif %}
+
+            {% endif %}
+          </h4>
+        </div>
+        <div class="col-4 d-flex justify-content-end align-items-center ">
+          <small class = "text-muted mr-2" ><h5>{{post.date_posted|date:"Y - M - d - H  "}}</h5> </small>
+        </div>
+      </div>
+      <hr style= "height : 4px ;  background-color: white;" >
+      <div class="col-md-12  px-0 py-0 ">
+        <h1 class="display-5 fst-italic" style = "" ><b>{{post.title}}</b></h1>
+        <br>
+        <p class="lead my-3" style = "color: black ">
+          <strong><b>{{post.content |truncatechars:400}}</b></strong>
+          </p>
+        <p class="lead mb-0">
+          <a style = "text-decoration : none ; " href="{% url 'post-detail' post.pk %}" class="text-white fw-bold" >
+            Continue reading...
+          </a>
+        </p>
+          <hr>
+          <strong>
+          <div class =" pb-2 mr-2 ml-2" style = "color: black ;margin-left:0px ;" >
+            Likes in the Post </strong>💕<strong> : {{post.likes}}
+          </div>
+          
+          
+          <hr>
+        </strong>
+      </div>
+    </div>
+
+    <div class="row mb-2">
+    {% else %}
+      <div class="col-md-6"
+      >
+        
+        <div
+        class = "mb-2 mr-2 ml-2 mt-2 p-1"
+          style = "border : 4px solid gray ; border-radius : 5px ; "
+          
+        >
+        <div class="row flex-nowrap justify-content-between align-items-center" 
+        >
+        <div class="nav-scroller py-1 mb-2">
+          <nav class="nav d-flex justify-content-between">
+            <li>
+              <img src = "{{post.author.profile.image.url}}" 
+              class = "rounded-circle article-img" 
+              style = "height:60px;width:60px;border-radius:50%;
+              border: 4px solid white">
+              
+              <a style = "text-decoration : none ; " href = "{% url 'profile-user' username=post.author.username %}"
+              style = "font-weight : 400 ;  text-decoration : none ;
+              margin-left : 10px ;">{{post.author.username}}</a>
+              {% if request.user != post.author %}
+            
+              {% if request.user not in post.author.fame.followers.all %}
+
+                <a style = "text-decoration : none ; " href ="{% url 'follow-user' userid=post.author.id %}" style = "margin-left:20px;">Follow</a>
+              {% endif %}
+
+            {% endif %}
+            </li>
+                <div class="col-4 d-flex justify-content-end align-items-center">
+                  <small class = "text-muted mr-2" >{{post.date_posted|date:"Y-M-d"}} </small>
+                </div>
+            </nav>
+          </div>
+          
+        </div>
+        <hr>
+          <div class="col p-4 d-flex flex-column position-static" >
+            <h2 class="mb-0">{{post.title|truncatechars:100}}</h2>
+            <br>
+            <p class="card-text mb-auto">
+              <h5>{{post.content|truncatechars:250}}</h5>
+            </p>
+            <a style = "text-decoration : none ; " href ="{% url 'post-detail' post.pk %}"
+            style = "text-decoration:none;">Continue Reading ...</a>
+          </div>
+          <hr>
+          <div class ="text-muted pb-2 mr-2 ml-2" >
+
+            Likes in the Post 💕 : {{post.likes}}
+          </div>
+        </div>
+        
+      </div>
+      {% endif %}
+      {% endfor %}
+      
+    </div>
+
+  </main>
+  {% if users %}
+    <main class = "col col-lg-1" > 
+      <br>
+      <big style = ""> <center>UserNames</center> </big>
+      <hr width = 100%>
+      <br>
+      {% for user in users %}
+        <div class = "" style = "display : flex ; justify-content : left">
+          <img src = "{{user.profile.image.url}}" style = "height : 30px;  width : 30px ; border-radius: 50%">
+          <a style = "text-decoration : none ; " href = "{% url 'profile-user' username=user.username %}">{{user.username}}</a>
+        </div>
+        <br>
+      {% endfor%}
+    </main>
+  {% endif %}
+
+  {% if searched_posts %}
+    <div class = "col col-lg-2">
+      <big> <u>The posts found according to search</u></big>
+      <hr>
+      {% for post in searched_posts %}
+        <div class = "" style = "display : flex ; justify-content : left">
+          <a style = "text-decoration : none ; " href = "{% url 'profile-user' username=post.author.username%}">
+          <img  src = "{{post.author.profile.image.url}}" style = "height : 30px;  width : 30px ; border-radius: 50%  ; margin-right: 8px ; " ></a>
+          <a style = "text-decoration : none ; " href = "{% url 'post-detail' pk=post.id %}" style = "text-decoration : none ; ">{{post.title}}</a>
+        </div>
+        <br>
+      {% endfor %}
+    </div>
+  {% endif %}
+<div>
+
+<footer class="blog-footer">
+  
+  <p>
+    <a style = "text-decoration : none ; " href="#top">
+      <button type="button" class="btn btn-outline-info btn-lg btn-block">
+       <img style = "repeat : no-repeat ; width : 30px ; border-radius : 50%; " 
+      src = "{% static 'blog/up_arrow.jpg' %}";
+       > 
+       Back to top of the Page
+
+      </button>
+    </a>
+  </p>
+
+<div class = "align-center"  style = "text-align : center">
+  {% if is_paginated  %}
+  
+    {% if page_obj.has_previous  %} 
+  
+      <a style = "text-decoration : none ; " href = "?page=1" class = "btn btn-outline-info  mb-4"> First </a>
+      <a style = "text-decoration : none ; " href = "?page={{page_obj.previous_page_number}}" class = "btn btn-outline-info  mb-4"> Prev </a>
+    {% endif %}
+  
+    {% for num in page_obj.paginator.page_range %}
+    
+      {% if page_obj.number == num %}
+      <a class = "btn btn-info mb-4"  href = "?page={{num}}" >{{num}} </a>
+      {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+      <a class = "btn btn-outline-info mb-4" href ="?page={{num}}"> {{num}} </a>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    
+    <a style = "text-decoration : none ; " href = "?page={{page_obj.next_page_number}}" class = "btn btn-outline-info mb-4">Next </a>
+    <a style = "text-decoration : none ; " href = "?page={{page_obj.paginator.num_pages}}" class = "btn btn-outline-info mb-4">Last</a>
+  
+    {% endif %}  
+  {% endif %}
+</div>
+</footer>
+{% endblock content %}

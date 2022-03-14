@@ -1,0 +1,59 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+
+<style>
+    .search__page__container{ 
+        display : grid ; 
+        grid-template-columns : 1fr 1fr 1fr ; 
+        grid-gap : 10px   ;
+    }
+
+    .search__page__container > *{ 
+        border : 2px solid red ; 
+    }
+
+    @media screen and (max-width: 600px ) { 
+        .search__page__container{ 
+            background-color: yellow ; 
+        }
+    } 
+</style>
+
+<div class = "search__page__container" > 
+
+    <div>
+        <h3> The users with the name </h3>
+        <hr>
+        {% for user in users %}
+
+        <a href= "{% url 'profile-user' username=user.username %}" > 
+            {{user.username }}
+        </a>
+        <br>
+        {% endfor %}
+    </div>
+
+    <div>
+        <h3> The posts related with the search_input </h3>
+
+        <hr>
+
+        {% for post in searched_posts %}
+        <div style = "border: 2px solid black  ; margin: 5px ;padding: 5px ;  ">
+        <a href= "{% url 'post-detail' pk=post.id %}" > 
+            {{post.title}}
+        </a>
+        <hr>
+        {{post.content|truncatechars:50}}
+    </div>
+        {% endfor %}
+
+    </div>
+    <div>
+        <h3> The hastag related to the search input </div>
+    </div>
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+
+<div class = "" > 
+    Are you sure you want to delete the account ? 
+    <br/>
+    <br/>
+
+    You won't be able to recover your posts and You can't access your account . In order to access the site and  the contents , you have to create a new account . 
+    <br/>
+    <br/>
+
+    <a href = "{% url 'delete-account-confirm' pk=request.user.id %}">
+    <button class = "btn btn-danger" > Confirm Delete </button>
+    </a>
+    <a href = "{% url 'profile-user' username=request.user.username %}">
+    <button class = "btn btn-outline-primary" > Cancel </button>
+    </a>
+</div>
+{% endblock content %}

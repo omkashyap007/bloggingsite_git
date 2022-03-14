@@ -1,0 +1,44 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+
+<style>
+
+    .fame__page__container{ 
+        display: grid ; 
+        grid-template-columns : 1fr 1fr ; 
+        grid-gap : 5px; 
+    }
+
+    .fame__page__container > * { 
+        border: 2px solid red ; 
+        padding : 5px ; 
+    }
+
+</style>
+
+
+<div class = "fame__page__container">
+    <div>
+        <h1>Followers</h1>
+        <hr>
+        {% for follower in followers %}
+        <div style = "border: 2px solid deeppink ; margin: 2px ; padding : 2px;margin-top : 3px;">
+        <img src = "{{follower.profile.image.url}}" style = "height: 50px ; 50px ; border-radius : 50% ; ">
+        {{follower.username}}
+        </div>
+        {% endfor %}
+    </div>
+    <div>
+        <h1> Following </h1>
+        <hr>
+        {% for following in followings %}
+        <div style = "border: 2px solid deeppink ; margin: 2px ; padding : 2px;margin-top :3px;  ">
+        <img src = "{{following.profile.image.url}}" style = "height: 50px ; 50px ; border-radius : 50% ; ">
+        {{following.username}}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

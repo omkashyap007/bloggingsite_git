@@ -1,0 +1,80 @@
+{% extends "blog/base.html" %} {% load crispy_forms_tags %} {% block content %}
+<style>
+  #title_text_color {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    padding: 0;
+  }
+
+  #title_text_color::-webkit-color-swatch {
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+  }
+
+  #content_text_color {
+    border: none;
+    padding: 0;
+    width: 10px;
+  }
+  #content_text_color {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    padding: 0;
+  }
+
+  #content_text_color::-webkit-color-swatch {
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+  }
+</style>
+
+<div class="form-content" style="margin-bottom: 10px; padding: 5px">
+  <h3>Create Your post Here</h3>
+  <br />
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div style="display: flex; justify-content: baseline; flex-direction: row">
+      {{form.title}}
+      <input
+        type="color"
+        value=""
+        style="padding: 0px"
+        id="title_text_color"
+        style="margin-left: 10px"
+        name="title_text_color"
+      />
+    </div>
+    <br />
+    <div style="display: flex; flex-direction: row; justify-content: baseline">
+      {{form.content}}
+      <input
+        type="color"
+        value=""
+        default="#ff0000"
+        style="padding: 0px"
+        id="content_text_color"
+        style="margin-left: 10px"
+        name="content_text_color"
+      />
+    </div>
+    <br />
+
+    <div style="display: flex; flex-direction: row; justify-content: baseline ; color: blue ;">
+      {{form.hashtags}}
+    </div>
+    <br />
+    <input type="submit" value="Post" class="btn btn-primary" />
+  </form>
+</div>
+{% endblock content %} {% block title%}Create Blog {% endblock title%}

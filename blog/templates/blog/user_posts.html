@@ -1,0 +1,63 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block title%}{% endblock title%}
+{{user.image}}
+{% block content%}
+<h3 class = "mb-2">The posts are created by {{user.username}}</h3>
+<br>
+{% for post in posts %}
+<article class = "media content-section">
+
+  <div class = "media-body" style = "border:2px solid gray;background-color : white;
+  border-radius : 5px ;">
+
+    <div class = "article-metadata mt-2 mr-3 ml-4 mb-2" style = "text-decoration:none ; ">
+      <a style = "text-decoration:none ; " class = "article-image mr-2 pl-2  pt-2" 
+      href ="#" > 
+        <img src="{{post.author.profile.image.url}}" class = "rounded-circle article-img  " style = "height:50px;width:50px;border-radius:50%">
+      </a>
+      <a style = "text-decoration:none ; " class = "mr-2 " href = "{% url 'profile-user' username=post.author  %}" >{{post.author}}</a>
+      <small class = "text-muted mr-2" >{{post.date_posted|date:"F-d-Y"}} </small>
+      <hr>
+    </div>
+    <div class = "article-title mt-1 ml-4 mb-1 py-3"><h3>
+    <a href = "{% url 'post-detail'  post.id %}" style = "text-decoration : none; " >{{post.title}}</a><h3></div>
+    <div class = "article-content mt-1 ml-4 " style = "font-family : inconsolata ;
+    font-weight : 600" ><h5>{{post.content}}></h5></div>
+      <hr>
+    <div class ="text-muted mr-5 mt-2 ml-5 mb-2" >
+      Likes 💕 : {{post.likes}}
+    </div>
+</article>
+<br>
+{% endfor %}
+<div class = "align-center"  style = "text-align : center">
+{% if is_paginated  %}
+
+  {% if page_obj.has_previous  %} 
+  <!-- the current page object is the page_object p = paginator.page(current_page)-->
+
+    <a href = "?page=1" class = "btn btn-outline-info  mb-4"> First </a>
+    <a href = "?page={{page_obj.previous_page_number}}" class = "btn btn-outline-info  mb-4"> Prev </a>
+  {% endif %}
+
+  {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+    <a class = "btn btn-info mb-4"  href = "?page={{num}}" >{{num}} </a>
+    {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+    <a class = "btn btn-outline-info mb-4" href ="?page={{num}}"> {{num}} </a>
+    {% endif %}
+  {% endfor %}
+  
+  {% if page_obj.has_next %}
+  
+  <a href = "?page={{page_obj.next_page_number}}" class = "btn btn-outline-info mb-4">Next </a>
+  <a href = "?page={{page_obj.paginator.num_pages}}" class = "btn btn-outline-info mb-4">Last</a>
+
+  {% endif %}  
+{% endif %}
+</div>
+
+{% endblock content%}
+
+

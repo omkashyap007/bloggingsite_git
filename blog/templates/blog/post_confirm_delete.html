@@ -1,0 +1,26 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block background_image %}
+{% static 'blog/skeleton_doing_dab.jpg'  %}
+{% endblock background_image%}
+
+{% block content %}
+
+<div class = "content-section mt-3 ml-1 pl-3 mr-1 pr-3" style = "border: 1px solid gray;
+   border-radius : 10px ; background-color: none;">
+  <form method = "POST" > 
+    {% csrf_token %}
+    <fieldset class = "form-group" > 
+      <legend  class = "border-bottom mb-4" >Delete Post</legend>
+      Are you sure you want to delte the post  {{object.title}} ?
+    </fieldset>
+    <div class = "form-group" >
+      <button class = "btn btn-outline-danger " type = "submit">Confirm Delete</button>
+      <a class = "btn btn-outline-secondary "  href = "{% url 'post-detail' object.id %}">Cancel</a>
+    </div> 
+    </form>
+</div>
+
+{% endblock content %}
