@@ -5,9 +5,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-x34)-4t5-k9nsupj0=@!wofx#=+s!^k@y!i4g)&se7i$1=&sh#'
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1" ,"blogsitedevelopment007.herokuapp.com"]
+ALLOWED_HOSTS = ["127.0.0.1" ,"blogsitedevelopment007.herokuapp.com" ,"localhost"]
 
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
@@ -92,13 +92,16 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR , "static")
-]
-MEDIA_ROOT = os.path.join(BASE_DIR , 'media')
 MEDIA_URL = "/media/"
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR , "static") ,
+    os.path.join(BASE_DIR , "media") ,
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_ROOT = os.path.join(BASE_DIR , 'media')
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

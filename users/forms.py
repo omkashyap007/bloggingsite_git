@@ -28,7 +28,8 @@ PROFESSION_CHOICES = [ ('student', 'Student'),
 ]
 
 
-class UserRegisterForm(UserCreationForm) :
+class UserRegisterForm(forms.ModelForm) :
+    
     username = forms.CharField(
         widget = forms.TextInput( 
             attrs = { 
@@ -75,8 +76,8 @@ class UserRegisterForm(UserCreationForm) :
     )
     
     class Meta : 
-        fields = ["username" , "email" , "password1" , "password2"]
         model = User
+        fields = ["username" , "email" , "password1" , "password2"]
     
     def clean_username(self) : 
         username = self.cleaned_data.get("username") 
@@ -111,8 +112,6 @@ class UserRegisterForm(UserCreationForm) :
             raise forms.ValidationError("Kindly enter the Password !")
         if len(password1) <8 : 
             raise forms.ValidationError("The lenght of the password must be greater than 8")
-        if not correctPassword(password1) : 
-            raise forms.ValidationError("The Password must satisfy the conditions for approval!")
         return password1
         
     #newpsOYOIPU2342&(&*())
@@ -249,3 +248,4 @@ class LoginForm(forms.Form) :
             raise forms.ValidationError("Invalid Password !") 
         
         return password 
+# abcdABXD123#@

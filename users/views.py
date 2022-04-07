@@ -15,7 +15,7 @@ from users.forms import LoginForm
 from blog.scripts import getErrorList
 
 def registerUser(request) :
-    if request.method == "POST" :
+    if request.method == "POST"   :
         form = UserRegisterForm(request.POST , request.FILES)
         if form.is_valid() : 
             form.save()
