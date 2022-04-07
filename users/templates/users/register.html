@@ -15,6 +15,13 @@
     <fieldset class = "form-group" > 
       <legend  class = "border-bottom mb-4" >Register Here</legend>
       {{form|crispy}}
+      <div>
+         <li>The password must contain capital letters</li>
+         <li>The password must contain lower letters</li>
+         <li>The password have numeric value in it</li>
+         <li>The password must have speacial characeters</li>
+         <li>The password should not be similar to the Username</li>
+       </div>
     </fieldset>
     <div class = "form-group" >
       <button class = "btn btn-outline-info " type = "submit"> Create Account</button>
