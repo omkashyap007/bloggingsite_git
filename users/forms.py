@@ -28,7 +28,7 @@ PROFESSION_CHOICES = [ ('student', 'Student'),
 ]
 
 
-class UserRegisterForm(forms.ModelForm) :
+class UserRegisterForm(UserCreationForm) :
     
     username = forms.CharField(
         widget = forms.TextInput( 
@@ -99,7 +99,7 @@ class UserRegisterForm(forms.ModelForm) :
         email_count = User.objects.filter(email = email).count() 
         
         if email_count: 
-            raise forms.ValiadationError("The email is already registered !")
+            raise forms.ValidationError("The email is already registered !")
         
         if not email_count:
             return email
@@ -236,7 +236,7 @@ class LoginForm(forms.Form) :
         username = self.cleaned_data.get("username")
         
         if not password : 
-            raise forms.ValidationError("Kindly entere the password !")
+            raise forms.ValidationError("Kindly enter the password !")
         try : 
             user = User.objects.get(username = username)
         except: 

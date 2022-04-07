@@ -18,11 +18,17 @@ def registerUser(request) :
     if request.method == "POST"   :
         form = UserRegisterForm(request.POST , request.FILES)
         if form.is_valid() : 
-            form.save()
+            saved_user = form.save()
+            print(saved_user)
+            username = request.POST.get("username")
+            password = request.POST.get("password1")
             username = form.cleaned_data.get("username") 
             messages.success(request, "Account created for {}".format(username))
             messages.success(request , "Kindly update your Profile in Profile Page ")
-            return redirect("login-user")
+            user = authenticate(username = username , password = password)
+            print(user)
+            login(request , user)
+            return redirect("blog-home")
         else : 
             print(form.errors)
     else : 
@@ -108,12 +114,17 @@ def  LoginUser(request)  :
             password = request.POST.get("password")
             
             user = authenticate(username = username , password = password) 
+            print(user)
             
             if user : 
                 login(request , user)
-                return redirect("blog-home")    
+                return redirect("blog-home")
+            else : 
+                message.error(request , "Kindly enter valid credentials !")   
         else : 
             errors = getErrorList(form.errors)
             
     context = {"form" : form , "errors" : errors}
     return render(request , "users/login.html" , context )
+
+# dfadsFD235^&
