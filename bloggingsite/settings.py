@@ -12,6 +12,7 @@ ALLOWED_HOSTS = ["127.0.0.1" ,"blogsitedevelopment007.herokuapp.com" ,"localhost
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
+    'api',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -19,10 +20,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'colorfield'
+    'colorfield',
+    'rest_framework' , 
+    'rest_framework.authtoken' , 
+    'django_filters' ,
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE = [ 
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -32,6 +36,20 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication' ,
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated' ,
+    ],
+    'DEFAULT_PAGINATION_CLASS': 
+        'rest_framework.pagination.PageNumberPagination' ,
+    'PAGE_SIZE' : 5 , 
+    
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'] ,
+}
 
 ROOT_URLCONF = 'bloggingsite.urls'
 

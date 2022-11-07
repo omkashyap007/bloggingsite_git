@@ -1,17 +1,17 @@
-from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import render, reverse
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import HttpResponse
 from datetime import datetime
-from .models import Post, Preference, Comment, Hashtag, Fame
-from django.contrib import messages
-from django.contrib.auth.models import User
-from django.shortcuts import redirect, get_object_or_404
-from django.core.paginator import Paginator
-from blog.scripts import CreateHashtagList, CreateOrAddHashtag
-from blog.forms import PostCreateForm , PostUpdateForm
 from django.db.models import Q
+from django.contrib import messages
+from django.http import HttpResponse
+from django.core.paginator import Paginator
+from django.contrib.auth.models import User
+from django.shortcuts import render, reverse
+from django.http import Http404, HttpResponseRedirect
+from blog.forms import PostCreateForm , PostUpdateForm
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from .models import Post, Preference, Comment, Hashtag, Fame
+from blog.scripts import CreateHashtagList, CreateOrAddHashtag
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
     ListView,
     DetailView,

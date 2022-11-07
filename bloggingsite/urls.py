@@ -27,6 +27,9 @@ urlpatterns = [
     #blog routing .
     path("" , include("blog.urls")) ,
     
+    #api routing .
+    path("api/" , include("api.urls")) ,
+    
     
     #password resetting
     path("password-reset/" ,
